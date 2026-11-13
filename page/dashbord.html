@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Digital Library</title>
+    <link rel="stylesheet" href="../css/dashbord.css">
+</head>
+<body>
+    <div class="dashboard-shell">
+        <header class="topbar">
+            <a class="brand" href="#dashboardSection" data-section="dashboardSection">
+                <span class="brand-mark">📚</span>
+                <span>Digital Library</span>
+            </a>
+            <nav class="nav-menu" aria-label="Main navigation">
+                <a href="#dashboardSection" data-section="dashboardSection" class="active">Dashboard</a>
+                <a href="#booksSection" data-section="booksSection">Books</a>
+                <a href="#membersSection" data-section="membersSection">Members</a>
+                <a href="#issueSection" data-section="issueSection">Issue Book</a>
+                <a href="#returnSection" data-section="returnSection">Return Book</a>
+                <a href="#reportsSection" data-section="reportsSection">Reports</a>
+                <a href="#settingsSection" data-section="settingsSection">Settings</a>
+                <a href="#aboutSection" data-section="aboutSection">About</a>
+                <a href="#" class="logout" onclick="logout()">Logout</a>
+            </nav>
+        </header>
+
+        <main class="main-content">
+            <section class="dashboard-content dashboard-page" id="dashboardSection">
+                <div class="welcome-block">
+                    <h1>Welcome to Dashboard</h1>
+                    <p>Digital Library Management System</p>
+                </div>
+                <div class="dashboard-metrics" aria-label="Library overview">
+                    <a class="metric-card" href="#booksSection" data-section="booksSection">
+                        <span class="metric-icon">📚</span>
+                        <span class="metric-value" id="dashboardBookCount">0</span>
+                        <span class="metric-label">Book titles</span>
+                        <span class="metric-trend">View collection <span aria-hidden="true">↗</span></span>
+                    </a>
+                    <a class="metric-card" href="#membersSection" data-section="membersSection">
+                        <span class="metric-icon">👥</span>
+                        <span class="metric-value" id="dashboardMemberCount">0</span>
+                        <span class="metric-label">Library members</span>
+                        <span class="metric-trend">View members <span aria-hidden="true">↗</span></span>
+                    </a>
+                    <a class="metric-card" href="#returnSection" data-section="returnSection">
+                        <span class="metric-icon">📖</span>
+                        <span class="metric-value" id="dashboardIssuedCount">0</span>
+                        <span class="metric-label">Copies on loan</span>
+                        <span class="metric-trend">Track active loans <span aria-hidden="true">↗</span></span>
+                    </a>
+                    <a class="metric-card" href="#issueSection" data-section="issueSection">
+                        <span class="metric-icon">✨</span>
+                        <span class="metric-value" id="dashboardAvailableCount">0</span>
+                        <span class="metric-label">Available copies</span>
+                        <span class="metric-trend">Issue a book <span aria-hidden="true">↗</span></span>
+                    </a>
+                </div>
+                <div class="card-grid">
+                    <a class="info-card" href="#booksSection" data-section="booksSection">
+                        <div class="icon-box book-icon">📚</div>
+                        <h2>Books</h2>
+                        <p>Manage all library books and book details.</p>
+                        <span class="card-button">View Books</span>
+                    </a>
+                    <a class="info-card" href="#membersSection" data-section="membersSection">
+                        <div class="icon-box member-icon">👥</div>
+                        <h2>Members</h2>
+                        <p>Add, view and manage library members.</p>
+                        <span class="card-button">View Members</span>
+                    </a>
+                    <a class="info-card" href="#issueSection" data-section="issueSection">
+                        <div class="icon-box issue-icon">📤</div>
+                        <h2>Issue Book</h2>
+                        <p>Issue books to registered library members.</p>
+                        <span class="card-button">Issue Book</span>
+                    </a>
+                    <a class="info-card" href="#returnSection" data-section="returnSection">
+                        <div class="icon-box return-icon">📥</div>
+                        <h2>Return Book</h2>
+                        <p>Track and complete returned books.</p>
+                        <span class="card-button">Return Book</span>
+                    </a>
+                    <a class="info-card" href="#reportsSection" data-section="reportsSection">
+                        <div class="icon-box report-icon">📊</div>
+                        <h2>Reports</h2>
+                        <p>Check library overview and activity.</p>
+                        <span class="card-button">View Reports</span>
+                    </a>
+                    <a class="info-card" href="#aboutSection" data-section="aboutSection">
+                        <div class="icon-box about-icon">ℹ️</div>
+                        <h2>About</h2>
+                        <p>Learn more about the library system.</p>
+                        <span class="card-button">About</span>
+                    </a>
+                </div>
+            </section>
+
+            <section class="management-section" id="booksSection" hidden>
+                <div class="section-heading">
+                    <div><h1>Book Management</h1><p class="section-description">Add, edit, search and manage books.</p></div>
+                    <button id="showBookForm" class="action-btn" type="button">+ Add Book</button>
+                </div>
+                <div class="book-search book-search-row">
+                    <input id="bookSearch" type="search" aria-label="Search books" placeholder="Search by ID, name, author, category...">
+                    <button id="clearBookSearch" class="clear-btn" type="button">Clear</button>
+                </div>
+                <div class="book-bulk-actions">
+                    <label class="select-all"><input id="selectAllBooks" type="checkbox"> Select All</label>
+                    <button id="deleteSelectedBooks" class="delete-selected-btn" type="button">▣ Delete Selected</button>
+                </div>
+                <p id="bookSelectionCount" class="selection-count" aria-live="polite">0 books selected</p>
+                <div class="table-wrapper">
+                    <table class="book-table">
+                        <thead>
+                            <tr>
+                                <th class="select-column">Select <input id="booksHeaderSelectAll" type="checkbox" aria-label="Select all visible books"></th>
+                                <th>Book ID</th>
+                                <th>Book Name</th>
+                                <th>Author</th>
+                                <th>Category</th>
+                                <th>Publisher</th>
+                                <th>Year</th>
+                                <th>Quantity</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="booksList"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="management-section" id="membersSection" hidden>
+                <div class="section-heading">
+                    <div><h1>Member Management</h1><p class="section-description">Add, edit, search and manage library members.</p></div>
+                    <button id="showMemberForm" class="action-btn" type="button">+ Add Member</button>
+                </div>
+                <div class="book-search">
+                    <label for="memberSearch">Search members</label>
+                    <input id="memberSearch" type="search" placeholder="Search by member ID or name">
+                </div>
+                <p id="memberStatusMessage" class="form-message" aria-live="polite"></p>
+                <div class="table-wrapper">
+                    <table class="book-table member-table">
+                        <thead><tr><th>Member ID</th><th>Name</th><th>Email</th><th>Mobile</th><th>Action</th></tr></thead>
+                        <tbody id="membersList"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="management-section" id="issueSection" hidden>
+                <div class="issue-page-heading">
+                    <p class="eyebrow">Library Management</p>
+                    <h1>Issue a Book</h1>
+                    <p>Assign an available book to a registered member and track active loans.</p>
+                </div>
+                <div class="issue-card">
+                    <div class="issue-card-heading">
+                        <h2>New Issue</h2>
+                        <p>Select a member and a book to issue.</p>
+                    </div>
+                    <form id="issueForm" class="data-form issue-form">
+                        <label class="issue-field" for="issueMember">Member Name
+                            <select id="issueMember" required><option value="">Select Member</option></select>
+                        </label>
+                        <label class="issue-field" for="issueBook">Book Name
+                            <select id="issueBook" required><option value="">Select Book</option></select>
+                        </label>
+                        <label class="issue-field" for="issueQuantity">Quantity
+                            <input id="issueQuantity" type="number" value="1" min="1" step="1" required>
+                        </label>
+                        <label class="issue-field" for="issueDate">Issue Date
+                            <input id="issueDate" type="date" required>
+                        </label>
+                        <label class="issue-field" for="issueReturnDate">Due Date
+                            <input id="issueReturnDate" type="date" required>
+                        </label>
+                        <button class="action-btn" type="submit">Issue Book</button>
+                    </form>
+                </div>
+                <p id="issueMessage" class="form-message" aria-live="polite"></p>
+                <div id="issuedList" class="data-list"></div>
+            </section>
+
+            <section class="management-section" id="returnSection" hidden>
+                <h1 class="return-page-title">Return Book</h1>
+                <div class="return-table-wrapper">
+                    <table class="return-table">
+                        <thead>
+                            <tr>
+                                <th>Issue ID</th>
+                                <th>Member Name</th>
+                                <th>Book Name</th>
+                                <th>Quantity</th>
+                                <th>Issue Date</th>
+                                <th>Return Date</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="returnTableBody"></tbody>
+                    </table>
+                </div>
+                <p id="returnMessage" class="form-message" aria-live="polite"></p>
+                <div class="return-reports">
+                    <h2>Library Reports</h2>
+                    <div id="returnReportSummary" class="report-summary"></div>
+                </div>
+            </section>
+
+            <section class="management-section" id="reportsSection" hidden>
+                <div class="reports-heading">
+                    <h1>Library Reports</h1>
+                    <p>View your library summary and book details.</p>
+                </div>
+                <div id="reportSummary" class="report-summary"></div>
+                <div class="book-report-card">
+                    <h2>Book Details Report</h2>
+                    <label class="report-search-label" for="reportBookSearch">Search books</label>
+                    <input id="reportBookSearch" class="report-book-search" type="search" placeholder="Search by Book ID, name, author or category...">
+                    <div class="report-table-wrapper">
+                        <table class="report-book-table">
+                            <thead>
+                                <tr>
+                                    <th>Book ID</th>
+                                    <th>Book Name</th>
+                                    <th>Author</th>
+                                    <th>Category</th>
+                                    <th>Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody id="reportBooksList"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section class="management-section" id="aboutSection" hidden>
+                <div class="section-heading"><div><p class="eyebrow">Digital Library</p><h1>About</h1></div></div>
+                <p class="about-copy">Manage books, members, issue records, and returns from one simple dashboard.</p>
+            </section>
+
+            <section class="management-section" id="settingsSection" hidden>
+                <div class="section-heading"><div><p class="eyebrow">Preferences</p><h1>Settings</h1></div></div>
+                <form id="settingsForm" class="data-form settings-form">
+                    <div class="setting-field"><label for="libraryName">Library name</label><input id="libraryName" type="text" required></div>
+                    <div class="setting-field"><label for="libraryEmail">Library email</label><input id="libraryEmail" type="email" required></div>
+                    <div class="setting-field"><label for="libraryPhone">Library phone</label><input id="libraryPhone" type="tel"></div>
+                    <div class="setting-field"><label for="libraryAddress">Library address</label><input id="libraryAddress" type="text"></div>
+                    <div class="setting-field"><label for="loanPeriodDays">Loan period (days)</label><input id="loanPeriodDays" type="number" min="1" required></div>
+                    <div class="setting-field"><label for="maxBooksPerMember">Maximum books per member</label><input id="maxBooksPerMember" type="number" min="1" required></div>
+                    <div class="setting-field"><label for="overdueFine">Overdue fine per day</label><input id="overdueFine" type="number" min="0" step="0.01" required></div>
+                    <div class="setting-field">
+                        <label id="openingTimeLabel">Opening time</label>
+                        <div class="time-inputs" role="group" aria-labelledby="openingTimeLabel">
+                            <input id="openingTimeHour" type="number" min="1" max="12" placeholder="HH" aria-label="Opening time hour">
+                            <span>:</span><input id="openingTimeMinute" type="number" min="0" max="59" placeholder="MM" aria-label="Opening time minute">
+                            <select id="openingTimePeriod" aria-label="Opening time AM or PM"><option value="AM">AM</option><option value="PM">PM</option></select>
+                        </div>
+                    </div>
+                    <div class="setting-field">
+                        <label id="closingTimeLabel">Closing time</label>
+                        <div class="time-inputs" role="group" aria-labelledby="closingTimeLabel">
+                            <input id="closingTimeHour" type="number" min="1" max="12" placeholder="HH" aria-label="Closing time hour">
+                            <span>:</span><input id="closingTimeMinute" type="number" min="0" max="59" placeholder="MM" aria-label="Closing time minute">
+                            <select id="closingTimePeriod" aria-label="Closing time AM or PM"><option value="AM">AM</option><option value="PM">PM</option></select>
+                        </div>
+                    </div>
+                    <button class="action-btn" type="submit">Save Settings</button>
+                </form>
+                <p id="settingsMessage" class="form-message" aria-live="polite"></p>
+            </section>
+        </main>
+        <div id="bookModal" class="modal-overlay" hidden aria-hidden="true">
+            <section class="book-modal" role="dialog" aria-modal="true" aria-labelledby="bookModalTitle">
+                <div class="modal-heading">
+                    <div>
+                        <h2 id="bookModalTitle">Add New Book</h2>
+                        <p>Enter the book details.</p>
+                    </div>
+                    <button id="closeBookModal" class="modal-close" type="button" aria-label="Close dialog">×</button>
+                </div>
+                <form id="bookForm" class="data-form">
+                    <label class="book-field">Book ID
+                        <input id="bookId" type="text" placeholder="Example: BK001">
+                    </label>
+                    <label class="book-field">Book Name
+                        <input id="bookTitle" type="text" placeholder="Enter book name" required>
+                    </label>
+                    <label class="book-field">Author
+                        <input id="bookAuthor" type="text" placeholder="Enter author name" required>
+                    </label>
+                    <label class="book-field">Category
+                        <input id="bookCategory" type="text" placeholder="Enter category" required>
+                    </label>
+                    <label class="book-field">Publisher
+                        <input id="bookPublisher" type="text" placeholder="Enter publisher" required>
+                    </label>
+                    <label class="book-field">Year
+                        <input id="bookYear" type="number" placeholder="Publication year" min="1" required>
+                    </label>
+                    <label class="book-field">Quantity
+                        <input id="bookQuantity" type="number" placeholder="Number of copies" min="1" step="1" required>
+                    </label>
+                    <p id="bookMessage" class="form-message" aria-live="polite"></p>
+                    <div class="modal-actions">
+                        <button id="bookSubmitButton" class="action-btn" type="submit">Add Book</button>
+                        <button id="cancelBookEdit" class="cancel-btn" type="button">Cancel</button>
+                    </div>
+                </form>
+            </section>
+        </div>
+        <div id="memberModal" class="modal-overlay" hidden aria-hidden="true">
+            <section class="book-modal" role="dialog" aria-modal="true" aria-labelledby="memberModalTitle">
+                <div class="modal-heading">
+                    <div>
+                        <h2 id="memberModalTitle">Add New Member</h2>
+                        <p>Enter the member details.</p>
+                    </div>
+                    <button id="closeMemberModal" class="modal-close" type="button" aria-label="Close dialog">×</button>
+                </div>
+                <form id="memberForm" class="data-form">
+                    <label class="book-field">Member ID
+                        <input id="memberId" type="text" placeholder="Auto-generated if empty">
+                    </label>
+                    <label class="book-field">Member Name
+                        <input id="memberName" type="text" placeholder="Enter member name" required>
+                    </label>
+                    <label class="book-field">Email Address
+                        <input id="memberEmail" type="email" placeholder="Enter email address" required>
+                    </label>
+                    <label class="book-field">Mobile Number
+                        <input id="memberPhone" type="tel" placeholder="10-digit mobile number" inputmode="numeric" maxlength="10" required>
+                    </label>
+                    <p id="memberMessage" class="form-message" aria-live="polite"></p>
+                    <div class="modal-actions">
+                        <button id="memberSubmitButton" class="action-btn" type="submit">Add Member</button>
+                        <button id="cancelMemberEdit" class="cancel-btn" type="button">Cancel</button>
+                    </div>
+                </form>
+            </section>
+        </div>
+        <footer class="footer-bar">© 2025 Digital Library Management System</footer>
+    </div>
+    <script src="../js/dashbord.js"></script>
+</body>
+</html>

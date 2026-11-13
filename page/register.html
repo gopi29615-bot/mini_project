@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Register | Digital Library</title>
+
+    <link rel="stylesheet"
+          href="../css/register.css">
+
+</head>
+
+<body class="auth-page">
+
+    <div class="auth-card">
+
+        <div class="auth-icon">
+            📝
+        </div>
+
+        <h1>Create Account</h1>
+
+        <p class="subtitle">
+            Register for Digital Library
+        </p>
+
+
+        <form id="registerForm">
+
+            <div class="form-group">
+
+                <label for="username">
+                    Username
+                </label>
+
+                <input
+                    type="text"
+                    id="username"
+                    placeholder="Create username"
+                    autocomplete="username"
+                    required
+                    minlength="3"
+                    maxlength="20"
+                    pattern="[A-Za-z0-9_]+"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="email">
+                    Email Address
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Enter email address"
+                    autocomplete="email"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="phone">
+                    Phone Number
+                </label>
+
+                <input
+                    type="tel"
+                    id="phone"
+                    placeholder="Enter phone number"
+                    autocomplete="tel"
+                    inputmode="numeric"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="password">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Create password"
+                    autocomplete="new-password"
+                    required
+                    minlength="8"
+                >
+                <small>Use at least 8 characters, including uppercase and lowercase letters and exactly one number.</small>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="confirmPassword">
+                    Confirm Password
+                </label>
+
+                <input
+                    type="password"
+                    id="confirmPassword"
+                    placeholder="Confirm password"
+                    autocomplete="new-password"
+                    required
+                >
+
+            </div>
+
+
+            <p id="registerMessage"
+               class="message">
+            </p>
+
+
+            <button type="submit"
+                    class="btn primary-btn">
+                Register
+            </button>
+
+        </form>
+
+
+        <p class="register-text">
+            Already have an account?
+            <a href="login.html">
+                Login
+            </a>
+        </p>
+
+
+        <a href="../index.html"
+           class="back-link">
+            ← Back to Welcome
+        </a>
+
+    </div>
+
+
+    <script src="../js/register.js"></script>
+
+</body>
+</html>
